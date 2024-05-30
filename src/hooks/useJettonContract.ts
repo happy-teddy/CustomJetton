@@ -21,7 +21,7 @@ export function useJettonContract() {
 
   const mint = () => {
     if (jettonContract)
-      jettonContract.send(sender, { value: BigInt(0.05) }, "Mint: 100");
+      return jettonContract.send(sender, { value: BigInt(0.05) }, "Mint: 100");
   };
 
   return {
