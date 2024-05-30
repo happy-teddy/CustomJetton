@@ -19,14 +19,12 @@ export function useJettonContract() {
     if (client) return client?.open?.(contract) as OpenedContract<SampleJetton>;
   }, [client]);
 
-  const mint = () => {
-    if (jettonContract)
-      return jettonContract.send(sender, { value: BigInt(0.05) }, "Mint: 100");
-  };
-
   return {
     // value: val,
     // address: jettonContract?.address.toString(),
-    mint: mint,
+    mint: () => {
+      console.log("jettonContract", jettonContract);
+      return jettonContract?.send(sender, { value: BigInt(0.05) }, "Mint: 100");
+    },
   };
 }
