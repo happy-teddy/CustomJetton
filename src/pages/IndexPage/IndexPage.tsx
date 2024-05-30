@@ -13,6 +13,7 @@ export const IndexPage: FC = () => {
   const { connected } = useTonConnect();
   // const utils = useUtils(true);
   const { mint } = useJettonContract();
+  console.log("IndexPage", connected, mint);
 
   // if (!wallet) {
   return (
