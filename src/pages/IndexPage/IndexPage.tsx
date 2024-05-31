@@ -28,7 +28,7 @@ export const IndexPage: FC = () => {
             <div>
               <Button
                 onClick={() => {
-                  mint();
+                  mint(mintAmount);
                 }}
               >
                 Mint

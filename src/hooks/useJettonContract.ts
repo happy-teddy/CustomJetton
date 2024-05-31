@@ -7,14 +7,13 @@ import { useTonConnect } from "./useTonConnect";
 import { Address, OpenedContract } from "@ton/core";
 
 export function useJettonContract() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const client = useTonClient() as any;
+  const client = useTonClient();
   const { sender } = useTonConnect();
 
   const jettonContract = useAsyncInitialize(async () => {
     if (!client) return;
     const contract = SampleJetton.fromAddress(
-      Address.parse("EQAvb2prB3qsA7ERWPvX5oPpRkjOLi9xrb00VezB5-Ap9i29")
+      Address.parse("EQC2g_7ytK-EYXyJ_BnE9g2JRmueDUhm8YZj0F-ovRBIiOcY")
     );
     if (client) return client?.open?.(contract) as OpenedContract<SampleJetton>;
   }, [client]);
@@ -22,9 +21,19 @@ export function useJettonContract() {
   return {
     // value: val,
     // address: jettonContract?.address.toString(),
-    mint: () => {
-      console.log("jettonContract", jettonContract);
-      return jettonContract?.send(sender, { value: BigInt(0.05) }, "Mint: 100");
+    mint: (amount: number) => {
+      console.log("jettonContract", client);
+      return jettonContract?.send(
+        sender,
+        { value: BigInt(2500000000) },
+        {
+          $$type: "Mint",
+          amount: BigInt(amount),
+          receiver:
+            sender.address ||
+            Address.parse("EQC2g_7ytK-EYXyJ_BnE9g2JRmueDUhm8YZj0F-ovRBIiOcY"),
+        }
+      );
     },
   };
 }
